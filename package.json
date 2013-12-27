@@ -1,7 +1,7 @@
 {
   "name": "mongoose-gravatar",
   "version": "0.0.1",
-  "description": "Mongoose plugin for generating gravatars from gravatar.com",
+  "description": "Mongoose plugin for generating gravatar.com urls",
   "main": "index.js",
   "dependencies": {
     "mocha": "~1.16.2"
