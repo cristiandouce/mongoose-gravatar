@@ -3,9 +3,7 @@
   "version": "0.0.1",
   "description": "Mongoose plugin for generating gravatar.com urls",
   "main": "index.js",
-  "dependencies": {
-    "mocha": "~1.16.2"
-  },
+  "dependencies": {},
   "devDependencies": {
     "mongoose": "~3.6.11",
     "mocha": "1.11.0"
