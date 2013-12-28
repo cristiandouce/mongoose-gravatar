@@ -1,6 +1,6 @@
 # mongoose-gravatar
 
-  Mongoose plugin to dinamically generate gravatar urls.
+  Mongoose plugin to dynamically generate gravatar urls.
 
   [![Build Status](https://travis-ci.org/cristiandouce/mongoose-gravatar.png?branch=master)](https://travis-ci.org/cristiandouce/mongoose-gravatar)
 
