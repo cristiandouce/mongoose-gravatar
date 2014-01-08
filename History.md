@@ -1,11 +1,10 @@
-
 0.2.0 / 2014-01-08
 ==================
 
  * Update Readme examples for plugin level options
- * Deprecate support for API params short name
- * Provide support for plugin level options
- * Simple renaming of options to settings at `gravatar` method
+ * Deprecated support for API params short name
+ * Add support for plugin level options
+ * Update name of var `options` to `settings` at `gravatar` method
  * Update Readme.md typo
  * Remove node@0.6.x from supported versions
 
