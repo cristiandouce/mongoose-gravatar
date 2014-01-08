@@ -1,3 +1,9 @@
+
+0.2.1 / 2014-01-08
+==================
+
+ * Remove unused array
+ * Update History.md changes format
 0.2.0 / 2014-01-08
 ==================
 
