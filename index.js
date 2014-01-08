@@ -20,24 +20,23 @@ module.exports = function plugin(schema, options) {
 
 /**
  * Creates a gravatar url
- * from `options` provided
+ * from `settings` provided
  *
- * @param {Object|undefined} options
+ * @param {Object|undefined} settings
  * @return {String} gravatar's API image `url`
  * @api private
  */
 
-function gravatar(options) {
-  options = options || {};
-  var email = options.email || this.email || "example@example.com";
-  var host = (options.secure ? "secure" : "www") + ".gravatar.com";
-  var protocol = options.secure ? "https" : "http";
+function gravatar(settings) {
+  var email = settings.email || this.email || "example@example.com";
+  var host = (settings.secure ? "secure" : "www") + ".gravatar.com";
+  var protocol = settings.secure ? "https" : "http";
   var pathname = "/avatar/" + md5(email);
   var params = {
-    s: options.size || options.s,
-    d: options.default || options.d,
-    f: options.forcedefault || options.f,
-    r: options.rating || options.r
+    s: settings.size || settings.s,
+    d: settings.default || settings.d,
+    f: settings.forcedefault || settings.f,
+    r: settings.rating || settings.r
   };  
 
   return url.format({
