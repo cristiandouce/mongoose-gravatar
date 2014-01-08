@@ -19,18 +19,29 @@
   // Extend User's Schema with gravatar plugin
   UserSchema.plugin(gravatar);
 
+  // or... provide some default options for plugin
+  var options = { secure: true, default: "retro", size: 245 };
+  UserSchema.plugin(gravatar, options);
+
   // ...
 
   var author = new User({ email: 'jorge@ups.com'});
 
   // retrieves a normal gravatar url
-  author.gravatar() // 'http://www.gravatar.com/avatar/23463b99b62a72f26ed677cc556c44e8'
+  author.gravatar()
+  // out: 'http://www.gravatar.com/avatar/23463b99b62a72f26ed677cc556c44e8'
 
   // retrieves a secure (https) gravatar url
-  author.gravatar({ secure: true }) // 'https://secure.gravatar.com/avatar/23463b99b62a72f26ed677cc556c44e8'
+  author.gravatar({ secure: true })
+  // out: 'https://secure.gravatar.com/avatar/23463b99b62a72f26ed677cc556c44e8'
   
   // sets size to 150px width and height
-  author.gravatar({ size: 150 }); // 'http://www.gravatar.com/avatar/23463b99b62a72f26ed677cc556c44e8?s=150'
+  author.gravatar({ size: 150 });
+  // out: 'http://www.gravatar.com/avatar/23463b99b62a72f26ed677cc556c44e8?s=150'
+
+  // With provided options at plugin level...
+  author.gravatar()
+  // out: https://secure.gravatar.com/avatar/23463b99b62a72f26ed677cc556c44e8?d=retro&s=245
 ```
 
 ## API options list
