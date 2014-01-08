@@ -37,10 +37,10 @@
 The following are the list of options allowed for `.gravatar()` model method.
 * `secure`: Compiles a secure url for gravatars. Check `gravatar.com` [docs](http://en.gravatar.com/site/implement/images/#secure-images) for more info.
 * `email`: Returns a gravatar url for a different email than the model's.
-* `size` or `s`: Determines the size of the image delivered by `gravatar.com`. Check `gravatar.com` [docs](http://en.gravatar.com/site/implement/images/#size) for more info.
-* `default` or `d`: Sets a default image when email has no avatar registered at `gravatar.com`. Check `gravatar.com` [docs](http://en.gravatar.com/site/implement/images/#default-image) for more info.
-* `forcedefault` or `f`: Forces default image. Check `gravatar.com` [docs](http://en.gravatar.com/site/implement/images/#force-default) for more info.
-* `rating` or `r`: Sets self-rated image policy. Check `gravatar.com` [docs](http://en.gravatar.com/site/implement/images/#rating) for more info.
+* `size`: Determines the size of the image delivered by `gravatar.com`. Check `gravatar.com` [docs](http://en.gravatar.com/site/implement/images/#size) for more info.
+* `default`: Sets a default image when email has no avatar registered at `gravatar.com`. Check `gravatar.com` [docs](http://en.gravatar.com/site/implement/images/#default-image) for more info.
+* `forcedefault`: Forces default image. Check `gravatar.com` [docs](http://en.gravatar.com/site/implement/images/#force-default) for more info.
+* `rating`: Sets self-rated image policy. Check `gravatar.com` [docs](http://en.gravatar.com/site/implement/images/#rating) for more info.
 
 
 ## Test
