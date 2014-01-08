@@ -95,7 +95,7 @@ function clear (obj) {
 
 function complete (settings, options) {
   var defaults = keys(options);
-  var params = ['default', 'forcedefault', 'size', 'rating'];
+
   for (var i = 0; i < defaults.length; i++) {
     var key = defaults[i];
 
