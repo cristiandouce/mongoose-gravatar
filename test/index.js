@@ -11,18 +11,23 @@ function md5(word) {
 // Connect mongoose to mongodb
 mongoose.connect('mongodb://localhost/mongoose_test_gravatar');
 
-// Define user Schema to extend with gravatar plugin
+// Define User and Admin schemas to extend with gravatar plugin
 var UserSchema = new Schema({ email: String });
+var AdminSchema = new Schema({ email: String });
 
-// Extend User's Schema with gravatar plugin
+// Extend User and Admin schemas with gravatar plugin
+var options = { default: "mm" };
 UserSchema.plugin(gravatar);
+AdminSchema.plugin(gravatar, options);
 
 // Register User Model on top of UserSchema
 var User = mongoose.model('User', UserSchema);
+var Admin = mongoose.model('Admin', AdminSchema);
 
-describe('gravatar', function () {
+describe('mongoose-gravatar', function () {
   var email = "";
   var user = {};
+  var admin = {};
   var url = "";
 
   before(function (done) {
@@ -39,12 +44,13 @@ describe('gravatar', function () {
   beforeEach(function(done) {
     email = "example@example.com";
     user = new User({ email: email });
+    admin = new Admin({ email: email });
     url = "http://www.gravatar.com/avatar/" + md5(email);
     done();
   });
 
-  describe('default', function() {    
-    it('should build a default gravatar url without params', function(done) {
+  describe('.gravatar()', function() {  
+    it('should build a base gravatar url without params', function(done) {
       assert.equal(url, user.gravatar());
       done();
     });
@@ -65,9 +71,15 @@ describe('gravatar', function () {
       assert.equal(url, user.gravatar())
       done();
     });
+
+    it('should build a base gravatar url with plugin\'s options params', function(done) {
+      url = url + "?d=mm";
+      assert.equal(url, admin.gravatar());
+      done();
+    });
   })
 
-  describe('params', function() {
+  describe('.gravatar(params)', function() {
     it('should use secure url', function (done) {
       url = "https://secure.gravatar.com/avatar/" + md5(email);
       assert.equal(url, user.gravatar({ secure: true }));
@@ -77,7 +89,6 @@ describe('gravatar', function () {
     it('should compile a query string when API params provided', function (done) {
       url = url + "?s=70&r=pg";
       assert.equal(url, user.gravatar({ size: 70, rating: "pg" }));
-      assert.equal(url, user.gravatar({ s: 70, r: "pg"}));
       done();
     });
 
@@ -90,6 +101,11 @@ describe('gravatar', function () {
       done();
     });
 
+    it('should override plugin\'s options with API params provided', function (done) {
+      url = url + "?d=retro";
+      assert.equal(url, admin.gravatar({ default: "retro" }));
+      done();
+    });
   });
 
   after(function () {
