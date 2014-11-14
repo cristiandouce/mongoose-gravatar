@@ -11,23 +11,26 @@ function md5(word) {
 // Connect mongoose to mongodb
 mongoose.connect('mongodb://localhost/mongoose_test_gravatar');
 
-// Define User and Admin schemas to extend with gravatar plugin
+// Define schemas to extend with gravatar plugin
 var UserSchema = new Schema({ email: String });
 var AdminSchema = new Schema({ email: String });
+var TesterSchema = new Schema({ primaryEmail: String });
 
-// Extend User and Admin schemas with gravatar plugin
-var options = { default: "mm" };
+// Extend schemas with gravatar plugin
 UserSchema.plugin(gravatar);
-AdminSchema.plugin(gravatar, options);
+AdminSchema.plugin(gravatar, { default: "mm" });
+TesterSchema.plugin(gravatar, { property: "primaryEmail" });
 
-// Register User Model on top of UserSchema
+// Register Models
 var User = mongoose.model('User', UserSchema);
 var Admin = mongoose.model('Admin', AdminSchema);
+var Tester = mongoose.model('Tester', TesterSchema);
 
 describe('mongoose-gravatar', function () {
   var email = "";
   var user = {};
   var admin = {};
+  var tester = {};
   var url = "";
 
   before(function (done) {
@@ -45,11 +48,12 @@ describe('mongoose-gravatar', function () {
     email = "example@example.com";
     user = new User({ email: email });
     admin = new Admin({ email: email });
+    tester = new Tester({ primaryEmail: email });
     url = "http://www.gravatar.com/avatar/" + md5(email);
     done();
   });
 
-  describe('.gravatar()', function() {  
+  describe('.gravatar()', function() {
     it('should build a base gravatar url without params', function(done) {
       assert.equal(url, user.gravatar());
       done();
@@ -68,7 +72,12 @@ describe('mongoose-gravatar', function () {
 
       url = "http://www.gravatar.com/avatar/" + md5(email);
 
-      assert.equal(url, user.gravatar())
+      assert.equal(url, user.gravatar());
+      done();
+    });
+
+    it('should support different schema properties', function(done) {
+      assert.equal(url, tester.gravatar());
       done();
     });
 
@@ -77,7 +86,7 @@ describe('mongoose-gravatar', function () {
       assert.equal(url, admin.gravatar());
       done();
     });
-  })
+  });
 
   describe('.gravatar(params)', function() {
     it('should use secure url', function (done) {
@@ -117,4 +126,3 @@ describe('mongoose-gravatar', function () {
   });
 
 });
-
