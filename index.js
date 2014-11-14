@@ -13,14 +13,13 @@ var keys = Object.keys;
  * @param {Object} options
  * @api public
  */
-
-module.exports = function plugin(schema, options) {
+module.exports = function plugin (schema, options) {
   options = options || {};
-  schema.methods.gravatar = function(settings) {
+  schema.methods.gravatar = function (settings) {
     settings = settings || {};
-    complete(settings, options);
+    merge(settings, options);
     return gravatar.call(this, settings);
-  }
+  };
 };
 
 /**
@@ -31,8 +30,7 @@ module.exports = function plugin(schema, options) {
  * @return {String} gravatar's API image `url`
  * @api private
  */
-
-function gravatar(settings) {
+function gravatar (settings) {
   var email = settings.email || this.email || "example@example.com";
   var host = (settings.secure ? "secure" : "www") + ".gravatar.com";
   var protocol = settings.secure ? "https" : "http";
@@ -42,7 +40,7 @@ function gravatar(settings) {
     d: settings.default,
     f: settings.forcedefault,
     r: settings.rating
-  };  
+  };
 
   return url.format({
     protocol: protocol,
@@ -50,7 +48,7 @@ function gravatar(settings) {
     pathname: pathname,
     query: clear(params)
   });
-};
+}
 
 /**
  * Creates an MD5 enctryption hash
@@ -60,9 +58,8 @@ function gravatar(settings) {
  * @return {String} hashed `word`
  * @api private
  */
-
-function md5(word) {
-  return crypto.createHash('md5').update(word).digest("hex");
+function md5 (word) {
+  return crypto.createHash("md5").update(word).digest("hex");
 }
 
 /**
@@ -73,36 +70,40 @@ function md5(word) {
  * @return {Object} reduced object
  * @api private
  */
-
 function clear (obj) {
-  var names = keys(obj);
-  names.forEach(function(n) {
-    if (null == obj[n]) delete obj[n];
+  var output = {};
+
+  keys(obj).forEach(function (key) {
+    if (obj[key] != null) {
+      output[key] = obj[key];
+    }
   });
-  return obj;
+
+  return output;
 }
 
 /**
- * Completes missing keys in `settings` object
- * from the ones comming from `options` object
+ * Merge missing keys in `settings` object
+ * from the ones coming from `options` object
  * as default values for `gravatar` function.
  *
  * @param {Object} settings
  * @param {Object} options
- * @return {Objsect} completed `settings` object
+ * @return {Objsect} merged `settings` object
  * @api private
  */
-
-function complete (settings, options) {
+function merge (settings, options) {
   var defaults = keys(options);
+  var length = defaults.length;
+  var i = 0;
 
-  for (var i = 0; i < defaults.length; i++) {
+  for (; i < length; i++) {
     var key = defaults[i];
 
-    if (null == settings[key] && null != options[key]) {
+    if (settings[key] == null && options[key] != null) {
       settings[key] = options[key];
     }
-  };
+  }
 
   return settings;
-};
+}
