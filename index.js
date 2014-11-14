@@ -14,16 +14,16 @@ var keys = Object.keys;
  * @api public
  */
 
-module.exports = function plugin(schema, options) {
+module.exports = function plugin (schema, options) {
   options = options || {
     property: 'email'
   };
 
-  schema.methods.gravatar = function(settings) {
+  schema.methods.gravatar = function (settings) {
     settings = settings || {};
-    complete(settings, options);
+    merge(settings, options);
     return gravatar.call(this, settings);
-  }
+  };
 };
 
 /**
@@ -35,25 +35,25 @@ module.exports = function plugin(schema, options) {
  * @api private
  */
 
-function gravatar(settings) {
+function gravatar (settings) {
   var email = settings.email || this[(settings.property || 'email')] || "example@example.com";
   var host = (settings.secure ? "secure" : "www") + ".gravatar.com";
   var protocol = settings.secure ? "https" : "http";
   var pathname = "/avatar/" + md5(email);
-  var params = {
+  var params = clear({
     s: settings.size,
     d: settings.default,
     f: settings.forcedefault,
     r: settings.rating
-  };
+  });
 
   return url.format({
     protocol: protocol,
     host: host,
     pathname: pathname,
-    query: clear(params)
+    query: params
   });
-};
+}
 
 /**
  * Creates an MD5 enctryption hash
@@ -64,7 +64,7 @@ function gravatar(settings) {
  * @api private
  */
 
-function md5(word) {
+function md5 (word) {
   return crypto.createHash('md5').update(word).digest("hex");
 }
 
@@ -78,16 +78,20 @@ function md5(word) {
  */
 
 function clear (obj) {
-  var names = keys(obj);
-  names.forEach(function(n) {
-    if (null == obj[n]) delete obj[n];
+  var output = {};
+
+  keys(obj).forEach(function(n) {
+    if (obj[key] != null) {
+      output[key] = obj[key];
+    }
   });
-  return obj;
+
+  return output;
 }
 
 /**
- * Completes missing keys in `settings` object
- * from the ones comming from `options` object
+ * Merge missing keys in `settings` object
+ * from the ones coming from `options` object
  * as default values for `gravatar` function.
  *
  * @param {Object} settings
@@ -96,16 +100,18 @@ function clear (obj) {
  * @api private
  */
 
-function complete (settings, options) {
+function merge (settings, options) {
   var defaults = keys(options);
+  var length = defaults.length;
+  var i = 0;
 
-  for (var i = 0; i < defaults.length; i++) {
+  for (; i < length; i++) {
     var key = defaults[i];
 
-    if (null == settings[key] && null != options[key]) {
+    if (settings[key] == null && options[key] != null) {
       settings[key] = options[key];
     }
-  };
+  }
 
   return settings;
-};
+}
