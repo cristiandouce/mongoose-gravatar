@@ -80,7 +80,7 @@ function md5 (word) {
 function clear (obj) {
   var output = {};
 
-  keys(obj).forEach(function(n) {
+  keys(obj).forEach(function (key) {
     if (obj[key] != null) {
       output[key] = obj[key];
     }
