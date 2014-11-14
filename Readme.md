@@ -12,42 +12,52 @@
 
 ## Usage example
 
+Setup
+
 ```js
-  var gravatar = require('mongoose-gravatar');
-  var UserSchema = new Schema({ email: String });
+var gravatar = require('mongoose-gravatar');
+var UserSchema = new Schema({ email: String });
 
-  // Extend User's Schema with gravatar plugin
-  UserSchema.plugin(gravatar);
+// Extend User's Schema with gravatar plugin
+UserSchema.plugin(gravatar);
 
-  // or... provide some default options for plugin
-  // note: var options = { property: "primaryEmail" ... should you want a different property than email.
-  var options = { secure: true, default: "retro", size: 245 };
-  UserSchema.plugin(gravatar, options);
+// or... provide some default options for plugin
+UserSchema.plugin(gravatar, { secure: true, default: "retro", size: 245 });
 
-  // ...
+// or... custom schema property
+UserSchema = new Schema({ primaryEmail: String });
+UserSchema.plugin(gravatar, { property: 'primaryEmail' });
 
-  var author = new User({ email: 'jorge@ups.com' });
-
-  // retrieves a normal gravatar url
-  author.gravatar()
-  // out: 'http://www.gravatar.com/avatar/23463b99b62a72f26ed677cc556c44e8'
-
-  // retrieves a secure (https) gravatar url
-  author.gravatar({ secure: true })
-  // out: 'https://secure.gravatar.com/avatar/23463b99b62a72f26ed677cc556c44e8'
-
-  // sets size to 150px width and height
-  author.gravatar({ size: 150 });
-  // out: 'http://www.gravatar.com/avatar/23463b99b62a72f26ed677cc556c44e8?s=150'
-
-  // With provided options at plugin level...
-  author.gravatar()
-  // out: https://secure.gravatar.com/avatar/23463b99b62a72f26ed677cc556c44e8?d=retro&s=245
+// ...
 ```
+
+Retrieving Gravatar from User Model
+
+```js
+var author = new User({ email: 'jorge@ups.com' });
+
+// retrieves a normal gravatar url
+author.gravatar()
+// out: 'http://www.gravatar.com/avatar/23463b99b62a72f26ed677cc556c44e8'
+
+// retrieves a secure (https) gravatar url
+author.gravatar({ secure: true })
+// out: 'https://secure.gravatar.com/avatar/23463b99b62a72f26ed677cc556c44e8'
+
+// sets size to 150px width and height
+author.gravatar({ size: 150 });
+// out: 'http://www.gravatar.com/avatar/23463b99b62a72f26ed677cc556c44e8?s=150'
+
+// With provided options at plugin level...
+author.gravatar()
+// out: https://secure.gravatar.com/avatar/23463b99b62a72f26ed677cc556c44e8?d=retro&s=245
+```
+
+## Plugin specific options
+* `property`: Schema property, optional, defaults to `email`
 
 ## API options list
 The following are the list of options allowed for `.gravatar()` model method.
-* `property`: Schema property, defaults to `email`
 * `secure`: Compiles a secure url for gravatars. Check `gravatar.com` [docs](http://en.gravatar.com/site/implement/images/#secure-images) for more info.
 * `email`: Returns a gravatar url for a different email than the model's.
 * `size`: Determines the size of the image delivered by `gravatar.com`. Check `gravatar.com` [docs](http://en.gravatar.com/site/implement/images/#size) for more info.
