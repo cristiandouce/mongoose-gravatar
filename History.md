@@ -1,4 +1,10 @@
 
+0.3.0 / 2014-11-14
+==================
+
+  * Fix memory leak in clear, and hinting @Nijikokun
+  * Support custom schema property @Nijikokun
+
 0.2.1 / 2014-01-08
 ==================
 
