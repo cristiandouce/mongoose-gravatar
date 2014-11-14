@@ -76,12 +76,14 @@ function md5 (word) {
 function clear (obj) {
   var output = {};
 
+  // Transfer properties to new object
   keys(obj).forEach(function (key) {
     if (obj[key] != null) {
       output[key] = obj[key];
     }
   });
 
+  // Output new object
   return output;
 }
 
