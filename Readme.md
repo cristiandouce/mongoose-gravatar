@@ -20,12 +20,13 @@
   UserSchema.plugin(gravatar);
 
   // or... provide some default options for plugin
+  // note: var options = { property: "primaryEmail" ... should you want a different property than email.
   var options = { secure: true, default: "retro", size: 245 };
   UserSchema.plugin(gravatar, options);
 
   // ...
 
-  var author = new User({ email: 'jorge@ups.com'});
+  var author = new User({ email: 'jorge@ups.com' });
 
   // retrieves a normal gravatar url
   author.gravatar()
@@ -34,7 +35,7 @@
   // retrieves a secure (https) gravatar url
   author.gravatar({ secure: true })
   // out: 'https://secure.gravatar.com/avatar/23463b99b62a72f26ed677cc556c44e8'
-  
+
   // sets size to 150px width and height
   author.gravatar({ size: 150 });
   // out: 'http://www.gravatar.com/avatar/23463b99b62a72f26ed677cc556c44e8?s=150'
@@ -46,6 +47,7 @@
 
 ## API options list
 The following are the list of options allowed for `.gravatar()` model method.
+* `property`: Schema property, defaults to `email`
 * `secure`: Compiles a secure url for gravatars. Check `gravatar.com` [docs](http://en.gravatar.com/site/implement/images/#secure-images) for more info.
 * `email`: Returns a gravatar url for a different email than the model's.
 * `size`: Determines the size of the image delivered by `gravatar.com`. Check `gravatar.com` [docs](http://en.gravatar.com/site/implement/images/#size) for more info.

@@ -15,7 +15,10 @@ var keys = Object.keys;
  */
 
 module.exports = function plugin(schema, options) {
-  options = options || {};
+  options = options || {
+    property: 'email'
+  };
+
   schema.methods.gravatar = function(settings) {
     settings = settings || {};
     complete(settings, options);
@@ -33,7 +36,7 @@ module.exports = function plugin(schema, options) {
  */
 
 function gravatar(settings) {
-  var email = settings.email || this.email || "example@example.com";
+  var email = settings.email || this[settings.property] || "example@example.com";
   var host = (settings.secure ? "secure" : "www") + ".gravatar.com";
   var protocol = settings.secure ? "https" : "http";
   var pathname = "/avatar/" + md5(email);
@@ -42,7 +45,7 @@ function gravatar(settings) {
     d: settings.default,
     f: settings.forcedefault,
     r: settings.rating
-  };  
+  };
 
   return url.format({
     protocol: protocol,
