@@ -35,18 +35,18 @@ function gravatar (settings) {
   var host = (settings.secure ? "secure" : "www") + ".gravatar.com";
   var protocol = settings.secure ? "https" : "http";
   var pathname = "/avatar/" + md5(email);
-  var params = {
+  var params = clear({
     s: settings.size,
     d: settings.default,
     f: settings.forcedefault,
     r: settings.rating
-  };
+  });
 
   return url.format({
     protocol: protocol,
     host: host,
     pathname: pathname,
-    query: clear(params)
+    query: params
   });
 }
 
@@ -73,12 +73,14 @@ function md5 (word) {
 function clear (obj) {
   var output = {};
 
+  // Transfer properties to new object
   keys(obj).forEach(function (key) {
     if (obj[key] != null) {
       output[key] = obj[key];
     }
   });
 
+  // Output new object
   return output;
 }
 
